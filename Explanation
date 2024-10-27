@@ -1,0 +1,65 @@
+let data = [ /* array of user objects */ ];
+This line defines a variable data, which is an array containing multiple user objects. Each object has various properties like id, name, email, address, and more.
+
+
+let info1 = document.querySelector('.js-info1');
+Here, we select an HTML element with the class js-info1 and store it in the variable info1. This is where we will display the user information.
+
+
+let html = '';
+An empty string html is initialized to build the HTML content that will be displayed later.
+
+
+for (let i = 0; i < data.length; i++) {
+This for loop iterates over each user object in the data array. The variable i is the index of the current user.
+
+    for (let key in data[i]) {
+Inside the first loop, this line starts another loop to go through each property (key) of the current user object (data[i]).
+
+
+    let value = data[i][key];
+Here, we get the value associated with the current key for the user. This could be a string (like the user's name) or another object (like the address).
+
+
+    if (typeof value === 'object') {
+This line checks if the value is an object. If it is, we need to handle its properties separately.
+
+
+      for (let subKey in value) {
+If the value is an object, this loop iterates over its properties (subKeys).
+
+
+        let subValue = value[subKey];
+We get the value for the current subKey.
+
+
+        if (typeof subValue === 'object') {
+This checks if the subValue is also an object. If it is, we need to dig even deeper.
+
+
+          for (let deepKey in subValue) {
+This loop goes through the properties of the nested object (like the geo object inside address).
+
+
+            html += `<p>${deepKey}: ${subValue[deepKey]}</p>`;
+Here, we create a paragraph (<p>) tag with the deepKey and its corresponding value, appending it to the html string.
+
+
+        } else {
+          html += `<p>${subKey}: ${subValue}</p>`;
+        }
+If the subValue is not an object, we create a paragraph for it directly and add it to html.
+
+
+    } else {
+      html += `<p>${key}: ${value}</p>`;
+    }
+If the original value is not an object, we simply create a paragraph for that key-value pair and add it to html.
+
+
+  }
+}
+These closing braces mark the end of the nested loops that handle user properties.
+
+info1.innerHTML = html;
+Finally, this line sets the inner HTML of the selected element (info1) to the generated html string. This means all the user details are now displayed on the webpage.
